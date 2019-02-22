@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './index.css';
 
-class loginForm extends Component {
+class Login extends Component {
     state = {
         name: '',
         password: '',
@@ -17,7 +17,7 @@ class loginForm extends Component {
     };
 
     handleSubmit = (event) => {
-        alert('A name was submitted: ' + this.state.name);
+       // alert('A name was submitted: ' + this.state.name);
         event.preventDefault();
     };
 
@@ -26,19 +26,19 @@ class loginForm extends Component {
         return (
 
             <form name="login" onSubmit={this.handleSubmit}>
-                <label>
+                <label className="input">
                     Name:
                     <input type="text" value={name} onChange={this.handleNameChange}/>
                 </label>
-                <label>
+                <label className="input">
                     Password:
                     <input type="password" value={password} onChange={this.handlePassChange}/>
                 </label>
-                <button type="submit" disabled={!name || !password}>Submit</button>
+                <button className="input" type="submit" disabled={!name || !password}>Submit</button>
             </form>
         )
     }
 
 }
 
-export default loginForm;
+export default Login;
