@@ -1,27 +1,26 @@
-const users = [{
-    _id: 1,
-    name: "Vasya",
-    password: "654321",
-    role: 0,
-    status: 1
-}, {
-    _id: 2,
-    name: "Petya",
-    password: "123456",
-    role: 1,
-    status: 1
-}];
+import axios from 'axios';
 
-const Users = {
-    getUsers: () => {
-        return users
-    },
+const uri = 'http://localhost:8080/users';
+const storage = window.localStorage;
+const token = storage.getItem('App_token');
+const headers = {"authorization": token};
 
-    getUser: (id) => {
-        return users.find(user => {
-            return user._id === +id
-        });
-    }
-};
+export function getUsers() {
+    return axios.get(uri, {headers})
+        .then(response => {
+            return response.data.data
 
-export default Users
+        }).catch(error => {
+            if (error.response) {
+                console.log('err', error.response.data.message);
+                return error.response
+            }
+        })
+}
+
+//
+// getUser: (id) => {
+//     return users.find(user => {
+//         return user._id === +id
+//     });
+// }

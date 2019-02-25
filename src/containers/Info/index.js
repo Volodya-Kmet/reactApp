@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-
-import userService from '../../services/userService';
+//
+// import userService from '../../services/userService';
 
 class Info extends Component {
     state = {
@@ -9,13 +9,12 @@ class Info extends Component {
     };
 
     componentWillMount (){
-        const id = this.props.match.params.id;
-        const user = userService.getUser(id);
-        console.log('user', user)
-        this.setState({
-            name: user.name,
-            role: user.role === 1 ? 'admin' : 'user'
-        })
+        // const id = this.props.match.params.id;
+        // const user = userService.getUser(id);
+        // this.setState({
+        //     name: user.name,
+        //     role: user.role === 1 ? 'admin' : 'user'
+        // })
     };
 
     render() {

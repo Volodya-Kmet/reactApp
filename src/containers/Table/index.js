@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
-
-import userService from '../../services/userService';
+import {getUsersList} from '../../actions/usersAction';
 
 import './index.css';
-
-const users = userService.getUsers();
+import {connect} from "react-redux";
 
 class Table extends Component {
     state = {
-        users
+        users: []
     };
-
+    componentWillMount() {
+        this.props.getUsers()
+    }
 
     render() {
         const {users} = this.state;
+
+console.log(this.props.userObj)
         return (
             <table>
                 <thead>
@@ -42,4 +44,19 @@ class Table extends Component {
     }
 }
 
-export default Table
+const mapStateToProps = (state) => {
+    return {
+        authObj: state.authReducer,
+        userObj: state.usersReducer,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getUsers: () => {
+           dispatch(getUsersList())
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table)
