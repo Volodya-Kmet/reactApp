@@ -1,80 +1,80 @@
-import React, {Component} from 'react';
-
-import './index.css';
+import React, {Component, Fragment} from 'react';
+import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+
+import {fetchEmployees} from "../../actions/employeesAction";
+import {changePage} from "../../actions/employeesAction";
+
+import Pagination from '../../components/Pagination';
+import './index.css';
 
 class Table extends Component {
     state = {
-        empls:  [],
+        empls: [],
         countOfRows: 0
     };
 
-    componentDidMount() {
-        this.props.getEmployeesList()
-        //
-        // const empls = this.props.emplsObj.rows;
-        // const countOfRows = this.props.emplsObj.countOfRows;
-        // console.log(this.props.emplsObj)
-        // console.log(empls)
-        // console.log(countOfRows)
-        // this.setState({empls, countOfRows })
-
-
-    }
-
     render() {
-        let {empls, countOfRows} = this.state;
-        if (this.props.emplsObj.rows){
-            empls = this.props.emplsObj.rows
-        //    console.log('>>>>',this.props.emplsObj.rows)
-        //     this.setState({
-        //         empls:  this.props.emplsObj.rows || [],
-        //         countOfRows: this.props.emplsObj.countOfRows || 0
-        //     })
+        let {empls, count} = this.state;
+        if (this.props.rows) {
+            empls = this.props.rows;
+            count = this.props.count;
         }
         return (
-            <table>
-                <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>State</th>
-                </tr>
-                </thead>
 
-                <tbody>
-                {
-                    empls.map((user) => {
-                        return (
-                            <tr key={user.empID}>
-                                <td>{user.empID}</td>
-                                <td>{user.empName}</td>
-                                <td>{user.dpName}</td>
-                                <td>{user.empActive}</td>
-                                <td>
-                                    <a href={`${this.props.location.pathname}/${user._id}`}>Edit</a>
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </table>
+            <Fragment>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>State</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {
+                        empls.map((empls) => {
+                            return (
+                                <tr key={empls.empID}>
+                                    <td>{empls.empID}</td>
+                                    <td>{empls.empName}</td>
+                                    <td>{empls.dpName}</td>
+                                    <td>{empls.empActive ? "Activated" : "Deactivated"}</td>
+                                    <td>
+                                        <Link to={`${this.props.location.pathname}/${empls.empID}`}>Edit</Link>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </table>
+                < Pagination chngePage={this.props.chngePage} count={count}
+                             page={this.props.page} limits={this.props.limits}/>
+            </Fragment>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        emplsObj: state.employeesReducer,
+        rows: state.employeesReducer.rows,
+        count: state.employeesReducer.count,
+        page: state.employeesReducer.page,
+        limits: state.employeesReducer.limits
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getEmployeesList: () => {
-            dispatch({type: "EMPL_CALL_REQUEST"})
+        chngePage: function (page, limit) {
+            dispatch(changePage(page, limit));
+            const offset = (page - 1) * limit;
+            dispatch(fetchEmployees(offset, limit))
         }
     }
 };

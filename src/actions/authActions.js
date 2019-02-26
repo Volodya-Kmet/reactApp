@@ -1,5 +1,13 @@
 const localSorage = window.localStorage;
 
+
+export function login (user) {
+    return {
+        type: "AUTH_LOGIN",
+        payload: user
+    }
+}
+
 export function authorized (userName, token) {
     localSorage.setItem('App_token', token);
     localSorage.setItem('App_userName', userName);

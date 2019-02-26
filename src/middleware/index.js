@@ -4,7 +4,7 @@ const history = createBrowserHistory({
 });
 
 export default (store) => (next) => (action) => {
-    if (action.type === 'DELETE_TOKEN') {
+    if (action.type === 'AUTH_FAIL') {
        history.push('/')
     }
    next(action)

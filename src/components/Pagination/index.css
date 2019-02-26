@@ -1,0 +1,16 @@
+.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination > li {
+    width: 25px;
+    margin: 0 5px;
+}
+
+.pagination > li > div {
+    width: 100%;
+    border: 1px solid black;
+}

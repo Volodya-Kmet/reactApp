@@ -7,8 +7,8 @@ const storage = window.localStorage;
 const token = storage.getItem('App_token');
 const headers = {"authorization": token};
 
-export function getEmployees() {
-    return axios.get(uri, {headers})
+export function getEmployees(offset, limit) {
+    return axios.get(`${uri}?offset=${offset}&&limit=${limit}`, {headers})
         .then(response => {
             return response.data.data
         }).catch(error => {
@@ -20,10 +20,3 @@ export function getEmployees() {
             }
         })
 }
-
-//
-// getUser: (id) => {
-//     return empls.find(user => {
-//         return user._id === +id
-//     });
-// }

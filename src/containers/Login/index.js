@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import store from "../../store";
 import authService from '../../services/authService';
-import {authorized} from "../../actions/authActions";
+import {authorized, login} from "../../actions/authActions";
 
 import './index.css';
 
@@ -32,12 +32,13 @@ class Login extends Component {
     };
 
     handleSubmit = (event) => {
-        authService.signIn(this.state)
-            .then(response => {
-                if (response.status === 'success') {
-                    this.props.history.push('/empls')
-                }
-            });
+        store.dispatch(login(this.state));
+        // authService.signIn(this.state)
+        //     .then(response => {
+        //         if (response.status === 'success') {
+        //             this.props.history.push('/empls')
+        //         }
+        //     });
         event.preventDefault();
     };
 

@@ -1,12 +1,17 @@
 import { put, takeLatest, fork, call, all } from 'redux-saga/effects';
 import {getEmployees} from '../services/employeesService';
 
-function* fetchEmployees() {
+import {successEmployees, failEmployees} from "../actions/employeesAction";
+import {showMessage} from "../actions/messageActions";
+
+function* fetchEmployees({payload}) {
+    const {offset, limit} = payload;
     try {
-        const payload = yield call(getEmployees);
-        yield put({type: "EMPL_CALL_SUCCESS", payload})
-    } catch (error) {
-        yield put({type: "EMPL_CALL_FAILURE", error})
+        const response = yield call(getEmployees, offset, limit);
+        yield put(successEmployees(response))
+    } catch (errorMes) {
+        yield put(showMessage(errorMes));
+        yield put(showMessage(failEmployees))
     }
 }
 
