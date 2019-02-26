@@ -19,7 +19,7 @@ class Login extends Component {
         const userName = this.localStorage.getItem('App_userName');
         if (token && userName) {
             store.dispatch(authorized(userName, token));
-            this.props.history.push('/users')
+            this.props.history.push('/empls')
         }
     };
 
@@ -35,7 +35,7 @@ class Login extends Component {
         authService.signIn(this.state)
             .then(response => {
                 if (response.status === 'success') {
-                    this.props.history.push('/users')
+                    this.props.history.push('/empls')
                 }
             });
         event.preventDefault();

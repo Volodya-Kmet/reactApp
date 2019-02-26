@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {hideMessage} from "../actions/messageActions";
 
 import Login from "./Login";
-import Users from "./Users";
+import Employees from "./Employees";
 import Error from "../components/Error404";
 import Modal from "../components/Modal";
 
@@ -20,7 +20,7 @@ class App extends Component {
                     <div className="App">
                         <Switch>
                             <Route path="/" component={Login} exact/>
-                            <Route path="/users" component={Users}/>
+                            <Route path="/empls" component={Employees}/>
                             <Route component={Error}/>
                         </Switch>
                     </div>

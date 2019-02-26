@@ -1,21 +1,23 @@
 export default (state = {}, action) => {
-    let newState = {...state};
     switch (action.type) {
         case "AUTH_SUCCESS":
-            return {
+            state = {
                 ...state,
                 token: action.payload.token,
                 userName: action.payload.userName
             };
+            break;
         case "AUTH_FAIL" :
-            return {
+            state = {
                 ...state,
                 token: '',
                 userName: ''
             };
+            break;
         default:
-            return {
+            state = {
                 ...state,
             }
     }
+    return state
 };

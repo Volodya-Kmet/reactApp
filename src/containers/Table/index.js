@@ -1,36 +1,57 @@
 import React, {Component} from 'react';
-import {getUsersList} from '../../actions/usersAction';
 
 import './index.css';
 import {connect} from "react-redux";
 
 class Table extends Component {
     state = {
-        users: []
+        empls:  [],
+        countOfRows: 0
     };
-    componentWillMount() {
-        this.props.getUsers()
+
+    componentDidMount() {
+        this.props.getEmployeesList()
+        //
+        // const empls = this.props.emplsObj.rows;
+        // const countOfRows = this.props.emplsObj.countOfRows;
+        // console.log(this.props.emplsObj)
+        // console.log(empls)
+        // console.log(countOfRows)
+        // this.setState({empls, countOfRows })
+
+
     }
 
     render() {
-        const {users} = this.state;
-
-console.log(this.props.userObj)
+        let {empls, countOfRows} = this.state;
+        if (this.props.emplsObj.rows){
+            empls = this.props.emplsObj.rows
+        //    console.log('>>>>',this.props.emplsObj.rows)
+        //     this.setState({
+        //         empls:  this.props.emplsObj.rows || [],
+        //         countOfRows: this.props.emplsObj.countOfRows || 0
+        //     })
+        }
         return (
             <table>
                 <thead>
                 <tr>
+                    <th>Number</th>
                     <th>Name</th>
-                    <th>Action</th>
+                    <th>Department</th>
+                    <th>State</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 {
-                    users.map((user) => {
+                    empls.map((user) => {
                         return (
-                            <tr key={user._id}>
-                                <td>{user.name}</td>
+                            <tr key={user.empID}>
+                                <td>{user.empID}</td>
+                                <td>{user.empName}</td>
+                                <td>{user.dpName}</td>
+                                <td>{user.empActive}</td>
                                 <td>
                                     <a href={`${this.props.location.pathname}/${user._id}`}>Edit</a>
                                 </td>
@@ -46,15 +67,14 @@ console.log(this.props.userObj)
 
 const mapStateToProps = (state) => {
     return {
-        authObj: state.authReducer,
-        userObj: state.usersReducer,
+        emplsObj: state.employeesReducer,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUsers: () => {
-           dispatch(getUsersList())
+        getEmployeesList: () => {
+            dispatch({type: "EMPL_CALL_REQUEST"})
         }
     }
 };

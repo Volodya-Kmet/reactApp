@@ -29,14 +29,14 @@ class Users extends Component {
         return (
             <Fragment>
                 <header>
-                    <Header userName={this.props.userObj.userName} logOut={this.props.logOut}></Header>
+                    <Header userName={this.props.emplsObj.userName} logOut={this.props.logOut}></Header>
                 </header>
                 <main className='main'>
                     <BrowserRouter>
                         <div>
                             <Switch>
-                                <Route path="/users" component={Table} exact/>
-                                <Route path="/users/:id" component={Info} exact/>
+                                <Route path="/empls" component={Table} exact/>
+                                <Route path="/empls/:id" component={Info} exact/>
                             </Switch>
                         </div>
                     </BrowserRouter>
@@ -48,7 +48,7 @@ class Users extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userObj: state.authReducer,
+        emplsObj: state.authReducer,
     }
 };
 

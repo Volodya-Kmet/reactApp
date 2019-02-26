@@ -14,6 +14,10 @@ export default (state = {modalOpen: false}, action) => {
                 modalOpen: false
             };
             break;
+        default:
+            state = {
+                ...state,
+            }
     }
     return state
 };
